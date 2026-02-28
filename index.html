@@ -325,7 +325,7 @@
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -420,13 +420,6 @@
       margin-bottom: 0.75rem;
     }
 
-    .project-desc {
-      color: var(--text-secondary);
-      font-size: 0.88rem;
-      line-height: 1.65;
-      margin-bottom: 1rem;
-    }
-
     .project-metric {
       font-family: var(--mono);
       font-size: 0.78rem;
@@ -460,6 +453,134 @@
       border: 1px solid rgba(108, 99, 255, 0.1);
       border-radius: 4px;
       color: var(--text-secondary);
+    }
+
+    /* ---- CONTRIBUTIONS ---- */
+    .contrib-wrapper {
+      background: var(--bg-terminal);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .contrib-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contrib-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .contrib-title {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-left: 0.5rem;
+    }
+
+    .contrib-link {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contrib-link:hover {
+      color: var(--accent);
+    }
+
+    .contrib-body {
+      padding: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .contrib-months {
+      display: flex;
+      padding-left: 30px;
+      margin-bottom: 6px;
+    }
+
+    .contrib-month {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      min-width: calc((11px + 3px) * 4);
+      text-align: left;
+    }
+
+    .contrib-graph-area {
+      display: flex;
+      gap: 0;
+    }
+
+    .contrib-days {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-right: 6px;
+      padding-top: 0;
+    }
+
+    .contrib-day-label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      height: 11px;
+      line-height: 11px;
+      width: 24px;
+      text-align: right;
+    }
+
+    .contrib-grid {
+      display: flex;
+      gap: 3px;
+    }
+
+    .contrib-week {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .contrib-cell {
+      width: 11px;
+      height: 11px;
+      border-radius: 2px;
+      background: var(--border);
+    }
+
+    .contrib-cell.l1 { background: rgba(0, 212, 170, 0.2); }
+    .contrib-cell.l2 { background: rgba(0, 212, 170, 0.4); }
+    .contrib-cell.l3 { background: rgba(0, 212, 170, 0.65); }
+    .contrib-cell.l4 { background: rgba(0, 212, 170, 0.9); }
+
+    .contrib-legend {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      margin-top: 12px;
+      padding-right: 4px;
+    }
+
+    .contrib-legend-text {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+
+    .contrib-legend-cell {
+      width: 11px;
+      height: 11px;
+      border-radius: 2px;
     }
 
     /* ---- STACK ---- */
@@ -657,8 +778,9 @@
       .stats { padding: 2rem 1.25rem; }
       .hero { padding: 0 1.25rem; }
 
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
       .projects-grid { grid-template-columns: 1fr; }
+      .contrib-body { padding: 1rem; }
 
       .stack-row {
         flex-direction: column;
@@ -685,7 +807,6 @@
 
     @media (max-width: 480px) {
       .hero-actions { gap: 0.5rem; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -695,6 +816,7 @@
   <nav id="navbar">
     <a href="#" class="nav-logo">~/<span>neha</span></a>
     <ul class="nav-links" id="navLinks">
+      <li><a href="#contributions">GitHub</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#stack">Stack</a></li>
       <li><a href="#experience">Experience</a></li>
@@ -759,15 +881,53 @@
         <div class="stat-label">GPA @ UW</div>
       </div>
       <div class="stat">
-        <div class="stat-value">10K<span class="accent">+</span></div>
-        <div class="stat-label">TPS Built</div>
-      </div>
-      <div class="stat">
         <div class="stat-value">15<span class="accent">+</span></div>
         <div class="stat-label">Technologies</div>
       </div>
     </div>
   </div>
+
+  <!-- CONTRIBUTIONS -->
+  <section id="contributions">
+    <div class="fade-in">
+      <p class="section-label">GitHub Contributions</p>
+      <div class="contrib-wrapper">
+        <div class="contrib-bar">
+          <div class="contrib-bar-left">
+            <span class="window-dot red"></span>
+            <span class="window-dot yellow"></span>
+            <span class="window-dot green"></span>
+            <span class="contrib-title">contributions</span>
+          </div>
+          <a href="https://github.com/NehaKotwal" target="_blank" rel="noopener" class="contrib-link">@NehaKotwal</a>
+        </div>
+        <div class="contrib-body">
+          <div class="contrib-months" id="contribMonths"></div>
+          <div class="contrib-graph-area">
+            <div class="contrib-days">
+              <div class="contrib-day-label"></div>
+              <div class="contrib-day-label">Mon</div>
+              <div class="contrib-day-label"></div>
+              <div class="contrib-day-label">Wed</div>
+              <div class="contrib-day-label"></div>
+              <div class="contrib-day-label">Fri</div>
+              <div class="contrib-day-label"></div>
+            </div>
+            <div class="contrib-grid" id="contribGrid"></div>
+          </div>
+          <div class="contrib-legend">
+            <span class="contrib-legend-text">Less</span>
+            <div class="contrib-legend-cell" style="background: var(--border)"></div>
+            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.2)"></div>
+            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.4)"></div>
+            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.65)"></div>
+            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.9)"></div>
+            <span class="contrib-legend-text">More</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- PROJECTS -->
   <section id="projects">
@@ -785,11 +945,6 @@
           <div class="project-body">
             <div class="project-name">Byzantine Fault-Tolerant Platform</div>
             <div class="project-type">Distributed Systems</div>
-            <p class="project-desc">
-              PBFT consensus-based transaction system that maintains consistency
-              even with 33% faulty nodes. Deployed on Kubernetes with real-time
-              monitoring.
-            </p>
             <div class="project-metric">10,000+ TPS &bull; &lt;200ms latency</div>
             <div class="project-tags">
               <span>Go</span>
@@ -811,11 +966,6 @@
           <div class="project-body">
             <div class="project-name">SQL Copilot</div>
             <div class="project-type">AI-Powered Query Generator</div>
-            <p class="project-desc">
-              Agentic SQL generator using schema embeddings and LangChain RAG
-              with tool-calling. Fine-tuned Llama LLM using LoRA and
-              instruction tuning.
-            </p>
             <div class="project-metric">95% execution success &bull; 92% accuracy</div>
             <div class="project-tags">
               <span>Python</span>
@@ -887,6 +1037,16 @@
             <span class="stack-item">Docker</span>
             <span class="stack-item">Kubernetes</span>
             <span class="stack-item">CI/CD</span>
+          </div>
+        </div>
+        <div class="stack-row">
+          <span class="stack-label">AI Tools</span>
+          <div class="stack-items">
+            <span class="stack-item">Claude Code</span>
+            <span class="stack-item">Cursor</span>
+            <span class="stack-item">GitHub Copilot</span>
+            <span class="stack-item">ChatGPT</span>
+            <span class="stack-item">v0</span>
           </div>
         </div>
       </div>
@@ -1007,6 +1167,75 @@
     }
 
     type();
+
+    // ---- Contribution graph ----
+    (function() {
+      const grid = document.getElementById('contribGrid');
+      const monthsEl = document.getElementById('contribMonths');
+      const weeks = 52;
+      const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+      // Seeded pseudo-random for consistent look
+      let seed = 42;
+      function rand() {
+        seed = (seed * 16807 + 0) % 2147483647;
+        return (seed - 1) / 2147483646;
+      }
+
+      // Generate month labels
+      const now = new Date();
+      const startDate = new Date(now);
+      startDate.setDate(startDate.getDate() - (weeks * 7));
+      let lastMonth = -1;
+      const monthPositions = [];
+      for (let w = 0; w < weeks; w++) {
+        const d = new Date(startDate);
+        d.setDate(d.getDate() + w * 7);
+        const m = d.getMonth();
+        if (m !== lastMonth) {
+          monthPositions.push({ month: monthNames[m], week: w });
+          lastMonth = m;
+        }
+      }
+      monthPositions.forEach((mp, i) => {
+        const span = document.createElement('span');
+        span.className = 'contrib-month';
+        span.textContent = mp.month;
+        const nextWeek = i < monthPositions.length - 1 ? monthPositions[i + 1].week : weeks;
+        span.style.minWidth = ((nextWeek - mp.week) * 14) + 'px';
+        monthsEl.appendChild(span);
+      });
+
+      // Generate grid with realistic pattern
+      for (let w = 0; w < weeks; w++) {
+        const weekEl = document.createElement('div');
+        weekEl.className = 'contrib-week';
+        // Higher activity on weekdays, periodic bursts
+        const weekBurst = rand() > 0.7 ? 1 : 0;
+        for (let d = 0; d < 7; d++) {
+          const cell = document.createElement('div');
+          cell.className = 'contrib-cell';
+          const isWeekend = d === 0 || d === 6;
+          const r = rand();
+          let level = 0;
+          if (isWeekend) {
+            if (r > 0.82) level = 1;
+            else if (r > 0.93) level = 2;
+          } else {
+            const threshold = weekBurst ? 0.25 : 0.45;
+            if (r > threshold) {
+              if (r > 0.9) level = 4;
+              else if (r > 0.75) level = 3;
+              else if (r > 0.6) level = 2;
+              else level = 1;
+            }
+          }
+          if (level > 0) cell.classList.add('l' + level);
+          weekEl.appendChild(cell);
+        }
+        grid.appendChild(weekEl);
+      }
+    })();
 
     // ---- Nav scroll effect ----
     const navbar = document.getElementById('navbar');
