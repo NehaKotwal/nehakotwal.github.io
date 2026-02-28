@@ -455,6 +455,31 @@
       color: var(--text-secondary);
     }
 
+    .github-more {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 1.75rem;
+      padding: 0.85rem 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.25s;
+    }
+
+    .github-more:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(108, 99, 255, 0.12);
+    }
+
     /* ---- CONTRIBUTIONS ---- */
     .contrib-wrapper {
       background: var(--bg-terminal);
@@ -978,6 +1003,11 @@
         </div>
 
       </div>
+      <a href="https://github.com/NehaKotwal" class="github-more" target="_blank" rel="noopener">
+        <svg fill="currentColor" viewBox="0 0 24 24" width="18" height="18"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        More on GitHub
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+      </a>
     </div>
   </section>
 
@@ -1168,72 +1198,122 @@
 
     type();
 
-    // ---- Contribution graph ----
+    // ---- Contribution graph (live from GitHub) ----
     (function() {
       const grid = document.getElementById('contribGrid');
       const monthsEl = document.getElementById('contribMonths');
-      const weeks = 52;
       const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-      // Seeded pseudo-random for consistent look
-      let seed = 42;
-      function rand() {
-        seed = (seed * 16807 + 0) % 2147483647;
-        return (seed - 1) / 2147483646;
-      }
+      function renderGraph(dayData) {
+        // dayData: array of { date, level } sorted by date ascending
+        // GitHub contribution graph: columns = weeks, rows = days (Sun=0..Sat=6)
+        // First, group days into weeks (Sun-start)
+        grid.innerHTML = '';
+        monthsEl.innerHTML = '';
 
-      // Generate month labels
-      const now = new Date();
-      const startDate = new Date(now);
-      startDate.setDate(startDate.getDate() - (weeks * 7));
-      let lastMonth = -1;
-      const monthPositions = [];
-      for (let w = 0; w < weeks; w++) {
-        const d = new Date(startDate);
-        d.setDate(d.getDate() + w * 7);
-        const m = d.getMonth();
-        if (m !== lastMonth) {
-          monthPositions.push({ month: monthNames[m], week: w });
-          lastMonth = m;
-        }
-      }
-      monthPositions.forEach((mp, i) => {
-        const span = document.createElement('span');
-        span.className = 'contrib-month';
-        span.textContent = mp.month;
-        const nextWeek = i < monthPositions.length - 1 ? monthPositions[i + 1].week : weeks;
-        span.style.minWidth = ((nextWeek - mp.week) * 14) + 'px';
-        monthsEl.appendChild(span);
-      });
+        if (!dayData.length) return;
 
-      // Generate grid with realistic pattern
-      for (let w = 0; w < weeks; w++) {
-        const weekEl = document.createElement('div');
-        weekEl.className = 'contrib-week';
-        // Higher activity on weekdays, periodic bursts
-        const weekBurst = rand() > 0.7 ? 1 : 0;
-        for (let d = 0; d < 7; d++) {
-          const cell = document.createElement('div');
-          cell.className = 'contrib-cell';
-          const isWeekend = d === 0 || d === 6;
-          const r = rand();
-          let level = 0;
-          if (isWeekend) {
-            if (r > 0.82) level = 1;
-            else if (r > 0.93) level = 2;
-          } else {
-            const threshold = weekBurst ? 0.25 : 0.45;
-            if (r > threshold) {
-              if (r > 0.9) level = 4;
-              else if (r > 0.75) level = 3;
-              else if (r > 0.6) level = 2;
-              else level = 1;
+        // Ensure we have exactly enough for full weeks
+        const firstDay = new Date(dayData[0].date + 'T00:00:00');
+        const padStart = firstDay.getDay(); // 0=Sun
+
+        const allDays = [];
+        // Pad start so first column is a full week
+        for (let i = 0; i < padStart; i++) allDays.push({ level: -1 }); // empty/hidden
+        dayData.forEach(d => allDays.push(d));
+
+        const totalWeeks = Math.ceil(allDays.length / 7);
+
+        // Month labels
+        let lastMonth = -1;
+        const monthPositions = [];
+        for (let w = 0; w < totalWeeks; w++) {
+          const idx = w * 7 + (w === 0 ? padStart : 0);
+          if (idx < dayData.length) {
+            const m = new Date(dayData[Math.min(idx, dayData.length - 1)].date + 'T00:00:00').getMonth();
+            if (m !== lastMonth) {
+              monthPositions.push({ month: monthNames[m], week: w });
+              lastMonth = m;
             }
           }
-          if (level > 0) cell.classList.add('l' + level);
-          weekEl.appendChild(cell);
         }
-        grid.appendChild(weekEl);
+        monthPositions.forEach((mp, i) => {
+          const span = document.createElement('span');
+          span.className = 'contrib-month';
+          span.textContent = mp.month;
+          const nextWeek = i < monthPositions.length - 1 ? monthPositions[i + 1].week : totalWeeks;
+          span.style.minWidth = ((nextWeek - mp.week) * 14) + 'px';
+          monthsEl.appendChild(span);
+        });
+
+        // Render grid
+        for (let w = 0; w < totalWeeks; w++) {
+          const weekEl = document.createElement('div');
+          weekEl.className = 'contrib-week';
+          for (let d = 0; d < 7; d++) {
+            const cell = document.createElement('div');
+            cell.className = 'contrib-cell';
+            const idx = w * 7 + d;
+            if (idx < allDays.length) {
+              const day = allDays[idx];
+              if (day.level === -1) {
+                cell.style.visibility = 'hidden';
+              } else if (day.level > 0) {
+                cell.classList.add('l' + day.level);
+                if (day.count) cell.title = day.date + ': ' + day.count + ' contribution' + (day.count !== 1 ? 's' : '');
+              } else if (day.date) {
+                cell.title = day.date + ': No contributions';
+              }
+            }
+            weekEl.appendChild(cell);
+          }
+          grid.appendChild(weekEl);
+        }
+      }
+
+      // Fetch live data from GitHub contributions API
+      fetch('https://github-contributions-api.jogruber.de/v4/NehaKotwal?y=last')
+        .then(r => r.json())
+        .then(data => {
+          if (data.contributions && data.contributions.length) {
+            renderGraph(data.contributions);
+            // Update total count in the title bar
+            if (data.total && data.total.lastYear) {
+              const titleEl = document.querySelector('.contrib-title');
+              if (titleEl) titleEl.textContent = data.total.lastYear + ' contributions in the last year';
+            }
+          } else {
+            renderFallback();
+          }
+        })
+        .catch(() => renderFallback());
+
+      function renderFallback() {
+        // Seeded pseudo-random fallback
+        let seed = 42;
+        function rand() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+        const now = new Date();
+        const start = new Date(now);
+        start.setDate(start.getDate() - 364);
+        // Align to Sunday
+        start.setDate(start.getDate() - start.getDay());
+        const days = [];
+        for (let i = 0; i < 371; i++) {
+          const d = new Date(start);
+          d.setDate(d.getDate() + i);
+          if (d > now) break;
+          const isWeekend = d.getDay() === 0 || d.getDay() === 6;
+          const r = rand();
+          let level = 0;
+          const burst = rand() > 0.7;
+          if (isWeekend) { if (r > 0.8) level = 1; }
+          else {
+            const t = burst ? 0.25 : 0.45;
+            if (r > t) { level = r > 0.9 ? 4 : r > 0.75 ? 3 : r > 0.6 ? 2 : 1; }
+          }
+          days.push({ date: d.toISOString().split('T')[0], level, count: level * 2 });
+        }
+        renderGraph(days);
       }
     })();
 
