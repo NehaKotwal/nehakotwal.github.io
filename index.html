@@ -470,6 +470,16 @@
       border-top: 1px solid var(--border);
     }
 
+    .project-link-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
     .project-link-btn {
       display: inline-flex;
       align-items: center;
@@ -943,11 +953,11 @@
   <nav id="navbar">
     <a href="#" class="nav-logo">~/<span>neha</span></a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#contributions">GitHub</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#stack">Stack</a></li>
-      <li><a href="#experience">Experience</a></li>
       <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#contributions">GitHub</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-social">
@@ -977,8 +987,9 @@
         <span class="typing-text" id="typingText"></span><span class="cursor"></span>
       </div>
       <p class="hero-tagline">
-        MS CS @ University of Washington. 5+ years building production systems
-        across fintech, healthcare &amp; distributed infrastructure.
+        MS CS @ University of Washington. 5+ years building production systems,
+        now focused on agentic AI and security across fintech, healthcare
+        &amp; distributed infrastructure.
       </p>
       <div class="hero-actions">
         <a href="https://github.com/NehaKotwal" class="icon-btn" target="_blank" rel="noopener" aria-label="GitHub">
@@ -1010,49 +1021,57 @@
         <div class="stat-label">GPA @ UW</div>
       </div>
       <div class="stat">
-        <div class="stat-value" data-target="15" data-suffix="+">0</div>
-        <div class="stat-label">Technologies</div>
+        <div class="stat-value" data-target="3">0</div>
+        <div class="stat-label">Industries Shipped In</div>
       </div>
     </div>
   </div>
 
-  <!-- CONTRIBUTIONS -->
-  <section id="contributions">
+  <!-- EXPERIENCE -->
+  <section id="experience">
     <div class="fade-in">
-      <p class="section-label">GitHub Contributions</p>
-      <div class="contrib-wrapper">
-        <div class="contrib-bar">
-          <div class="contrib-bar-left">
-            <span class="window-dot red"></span>
-            <span class="window-dot yellow"></span>
-            <span class="window-dot green"></span>
-            <span class="contrib-title">contributions</span>
+      <p class="section-label">Experience</p>
+      <div class="exp-table">
+        <div class="exp-row">
+          <div class="exp-left">
+            <span class="exp-company">F5</span>
+            <span class="exp-role">Developer Experience Intern</span>
           </div>
-          <a href="https://github.com/NehaKotwal" target="_blank" rel="noopener" class="contrib-link">@NehaKotwal</a>
+          <span class="exp-date">Jun &ndash; Sep 2026</span>
+          <p class="exp-desc">
+            Designed an agentic AI vulnerability risk system in Python and FastAPI, with data
+            pipelines that ingest, clean, and correlate vulnerability data from Qualys, CrowdStrike,
+            CVE, CPE, and internal reports. Developed a chat assistant that lets teams query that
+            data for risk insights and auto-fix the issues it surfaces.
+          </p>
         </div>
-        <div class="contrib-body">
-          <div class="contrib-months" id="contribMonths"></div>
-          <div class="contrib-graph-area">
-            <div class="contrib-days">
-              <div class="contrib-day-label"></div>
-              <div class="contrib-day-label">Mon</div>
-              <div class="contrib-day-label"></div>
-              <div class="contrib-day-label">Wed</div>
-              <div class="contrib-day-label"></div>
-              <div class="contrib-day-label">Fri</div>
-              <div class="contrib-day-label"></div>
-            </div>
-            <div class="contrib-grid" id="contribGrid"></div>
+        <div class="exp-row">
+          <div class="exp-left">
+            <span class="exp-company">UW Intelligent Network Lab</span>
+            <span class="exp-role">Graduate Researcher</span>
           </div>
-          <div class="contrib-legend">
-            <span class="contrib-legend-text">Less</span>
-            <div class="contrib-legend-cell" style="background: var(--border)"></div>
-            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.2)"></div>
-            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.4)"></div>
-            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.65)"></div>
-            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.9)"></div>
-            <span class="contrib-legend-text">More</span>
+          <span class="exp-date exp-current">2025 &ndash; Present</span>
+        </div>
+        <div class="exp-row">
+          <div class="exp-left">
+            <span class="exp-company">Bristlecone</span>
+            <span class="exp-role">Software Engineer 2</span>
           </div>
+          <span class="exp-date">2021 &ndash; 2023</span>
+        </div>
+        <div class="exp-row">
+          <div class="exp-left">
+            <span class="exp-company">Reserve Bank Information Technology</span>
+            <span class="exp-role">Software Engineer</span>
+          </div>
+          <span class="exp-date">2021</span>
+        </div>
+        <div class="exp-row">
+          <div class="exp-left">
+            <span class="exp-company">Zensar Technologies</span>
+            <span class="exp-role">Software Engineer</span>
+          </div>
+          <span class="exp-date">2018 &ndash; 2021</span>
         </div>
       </div>
     </div>
@@ -1082,6 +1101,9 @@
               <span>PBFT</span>
               <span>Prometheus</span>
               <span>Grafana</span>
+            </div>
+            <div class="project-links">
+              <span class="project-link-note">Private repo</span>
             </div>
           </div>
         </div>
@@ -1250,56 +1272,6 @@
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="fade-in">
-      <p class="section-label">Experience</p>
-      <div class="exp-table">
-        <div class="exp-row">
-          <div class="exp-left">
-            <span class="exp-company">F5</span>
-            <span class="exp-role">Developer Experience Intern</span>
-          </div>
-          <span class="exp-date">Jun &ndash; Sep 2026</span>
-          <p class="exp-desc">
-            Designed an agentic AI vulnerability risk system in Python and FastAPI, with data
-            pipelines that ingest, clean, and correlate vulnerability data from Qualys, CrowdStrike,
-            CVE, CPE, and internal reports. Developed a chat assistant that lets teams query that
-            data for risk insights and auto-fix the issues it surfaces.
-          </p>
-        </div>
-        <div class="exp-row">
-          <div class="exp-left">
-            <span class="exp-company">UW Intelligent Network Lab</span>
-            <span class="exp-role">Graduate Researcher</span>
-          </div>
-          <span class="exp-date exp-current">2025 &ndash; Present</span>
-        </div>
-        <div class="exp-row">
-          <div class="exp-left">
-            <span class="exp-company">Bristlecone</span>
-            <span class="exp-role">Software Engineer 2</span>
-          </div>
-          <span class="exp-date">2021 &ndash; 2023</span>
-        </div>
-        <div class="exp-row">
-          <div class="exp-left">
-            <span class="exp-company">Reserve Bank Information Technology</span>
-            <span class="exp-role">Software Engineer</span>
-          </div>
-          <span class="exp-date">2021</span>
-        </div>
-        <div class="exp-row">
-          <div class="exp-left">
-            <span class="exp-company">Zensar Technologies</span>
-            <span class="exp-role">Software Engineer</span>
-          </div>
-          <span class="exp-date">2018 &ndash; 2021</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- LEADERSHIP -->
   <section id="leadership">
     <div class="fade-in">
@@ -1310,7 +1282,7 @@
             <span class="exp-company">Women in CyberSecurity (WiCyS), UW Bothell</span>
             <span class="exp-role">Vice President</span>
           </div>
-          <span class="exp-date exp-current">Present</span>
+          <span class="exp-date exp-current">2025 &ndash; Present</span>
         </div>
       </div>
     </div>
@@ -1330,6 +1302,48 @@
           <span class="edu-school">Government College of Engineering</span>
           <span class="edu-degree">B.E. Information Technology</span>
           <span class="edu-gpa">8.17/10</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTRIBUTIONS -->
+  <section id="contributions">
+    <div class="fade-in">
+      <p class="section-label">GitHub Contributions</p>
+      <div class="contrib-wrapper">
+        <div class="contrib-bar">
+          <div class="contrib-bar-left">
+            <span class="window-dot red"></span>
+            <span class="window-dot yellow"></span>
+            <span class="window-dot green"></span>
+            <span class="contrib-title">contributions</span>
+          </div>
+          <a href="https://github.com/NehaKotwal" target="_blank" rel="noopener" class="contrib-link">@NehaKotwal</a>
+        </div>
+        <div class="contrib-body">
+          <div class="contrib-months" id="contribMonths"></div>
+          <div class="contrib-graph-area">
+            <div class="contrib-days">
+              <div class="contrib-day-label"></div>
+              <div class="contrib-day-label">Mon</div>
+              <div class="contrib-day-label"></div>
+              <div class="contrib-day-label">Wed</div>
+              <div class="contrib-day-label"></div>
+              <div class="contrib-day-label">Fri</div>
+              <div class="contrib-day-label"></div>
+            </div>
+            <div class="contrib-grid" id="contribGrid"></div>
+          </div>
+          <div class="contrib-legend">
+            <span class="contrib-legend-text">Less</span>
+            <div class="contrib-legend-cell" style="background: var(--border)"></div>
+            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.2)"></div>
+            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.4)"></div>
+            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.65)"></div>
+            <div class="contrib-legend-cell" style="background: rgba(0,212,170,0.9)"></div>
+            <span class="contrib-legend-text">More</span>
+          </div>
         </div>
       </div>
     </div>
