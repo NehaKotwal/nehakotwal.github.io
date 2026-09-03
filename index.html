@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neha Kotwal | Software Engineer</title>
   <meta name="description" content="Neha Kotwal - Software Engineer & CS Graduate Researcher at University of Washington. Building scalable systems, AI/ML solutions, and distributed platforms.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nehakotwal.github.io/">
+  <meta property="og:title" content="Neha Kotwal | Software Engineer">
+  <meta property="og:description" content="MS CS @ University of Washington. 5+ years building production systems, now focused on agentic AI and security across fintech, healthcare and distributed infrastructure.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Neha Kotwal | Software Engineer">
+  <meta name="twitter:description" content="MS CS @ University of Washington. 5+ years building production systems, now focused on agentic AI and security across fintech, healthcare and distributed infrastructure.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -101,6 +108,32 @@
       font-size: 0.85rem;
       font-weight: 400;
       transition: color 0.2s;
+    }
+
+    .nav-links a.active {
+      color: var(--accent-secondary);
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--accent-secondary);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .fade-in {
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
 
     .nav-links a:hover {
@@ -305,6 +338,7 @@
       padding: 5rem 2rem;
       max-width: 900px;
       margin: 0 auto;
+      scroll-margin-top: 4.5rem;
     }
 
     .section-label {
@@ -899,8 +933,9 @@
         top: 100%;
         left: 0;
         right: 0;
-        background: rgba(10, 10, 11, 0.95);
-        backdrop-filter: blur(20px);
+        background: var(--bg-primary);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
         flex-direction: column;
         padding: 1.5rem;
         gap: 1rem;
@@ -954,9 +989,9 @@
     <a href="#" class="nav-logo">~/<span>neha</span></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#experience">Experience</a></li>
+      <li><a href="#leadership">Leadership</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#stack">Stack</a></li>
-      <li><a href="#leadership">Leadership</a></li>
       <li><a href="#contributions">GitHub</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -1072,6 +1107,22 @@
             <span class="exp-role">Software Engineer</span>
           </div>
           <span class="exp-date">2018 &ndash; 2021</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section id="leadership">
+    <div class="fade-in">
+      <p class="section-label">Leadership</p>
+      <div class="exp-table">
+        <div class="exp-row">
+          <div class="exp-left">
+            <span class="exp-company">Women in CyberSecurity (WiCyS), UW Bothell</span>
+            <span class="exp-role">Vice President</span>
+          </div>
+          <span class="exp-date exp-current">2025 &ndash; Present</span>
         </div>
       </div>
     </div>
@@ -1267,22 +1318,6 @@
             <span class="stack-item">ChatGPT</span>
             <span class="stack-item">v0</span>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- LEADERSHIP -->
-  <section id="leadership">
-    <div class="fade-in">
-      <p class="section-label">Leadership</p>
-      <div class="exp-table">
-        <div class="exp-row">
-          <div class="exp-left">
-            <span class="exp-company">Women in CyberSecurity (WiCyS), UW Bothell</span>
-            <span class="exp-role">Vice President</span>
-          </div>
-          <span class="exp-date exp-current">2025 &ndash; Present</span>
         </div>
       </div>
     </div>
@@ -1558,6 +1593,29 @@
     navLinks.querySelectorAll('a').forEach(a =>
       a.addEventListener('click', () => navLinks.classList.remove('open'))
     );
+
+    // ---- Active nav link ----
+    const navLinkEls = [...document.querySelectorAll('.nav-links a')];
+    const navTargets = navLinkEls
+      .map(a => ({ link: a, section: document.querySelector(a.getAttribute('href')) }))
+      .filter(t => t.section);
+
+    function updateActiveLink() {
+      // The active section is the last one whose top has passed just under the navbar.
+      const line = 120;
+      let current = null;
+      navTargets.forEach(t => {
+        if (t.section.getBoundingClientRect().top <= line) current = t;
+      });
+      // Near the page bottom the final section may never cross the line.
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+        current = navTargets[navTargets.length - 1];
+      }
+      navTargets.forEach(t => t.link.classList.toggle('active', t === current));
+    }
+
+    window.addEventListener('scroll', updateActiveLink, { passive: true });
+    updateActiveLink();
 
     // ---- Scroll reveal ----
     const observer = new IntersectionObserver((entries) => {
