@@ -735,6 +735,15 @@
       color: var(--accent-secondary);
     }
 
+    .exp-desc {
+      grid-column: 1 / -1;
+      margin-top: 0.4rem;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 62ch;
+    }
+
     /* ---- EDUCATION (compact) ---- */
     .edu-line {
       display: flex;
@@ -1244,6 +1253,19 @@
     <div class="fade-in">
       <p class="section-label">Experience</p>
       <div class="exp-table">
+        <div class="exp-row">
+          <div class="exp-left">
+            <span class="exp-company">F5</span>
+            <span class="exp-role">Developer Experience Intern</span>
+          </div>
+          <span class="exp-date">Jun &ndash; Sep 2026</span>
+          <p class="exp-desc">
+            Designed an agentic AI system for vulnerability risk assessment in Python and FastAPI,
+            with data pipelines that ingest, clean, and correlate findings across Qualys, CrowdStrike,
+            CVE, and CPE sources &mdash; and built a chatbot that lets teams query that data and surface
+            risk insights in plain English.
+          </p>
+        </div>
         <div class="exp-row">
           <div class="exp-left">
             <span class="exp-company">UW Intelligent Network Lab</span>
